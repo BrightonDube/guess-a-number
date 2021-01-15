@@ -1,32 +1,34 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import Card from "../Components/Card";
+import Input from "../Components/Input";
 import Colors from "../Constants/Colors";
 
 const StartGameScreen = () => {
-  const [number, setNumber] = useState(0);
-  const handleChange = () => {
-    setNumber(number);
+  const [number, setNumber] = useState("");
+  const handleChange = (num) => {
+    setNumber(num);
   };
   const handleReset = () => {
-    setNumber(0);
+    setNumber("");
   };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>New Game</Text>
       <Card style={styles.inputContainer}>
         <Text style={{ fontSize: 36, alignSelf: "center" }}>{number}</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Select a number"
-          onChangeText={handleChange}
-          value={number.toString()}
+
+        <Input
+          style={{ width: "100%" }}
+          number={number}
+          onChangeNum={handleChange}
         />
+
         <View style={styles.buttonContainer}>
           <Pressable onPress={handleReset} style={styles.button}>
             <Text style={styles.buttonText}>RESET</Text>
           </Pressable>
-          <Pressable onPress={handleChange} style={styles.button}>
+          <Pressable onPress={() => {}} style={styles.button}>
             <Text style={styles.buttonText}>CONFIRM</Text>
           </Pressable>
         </View>
@@ -50,16 +52,7 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
     borderRadius: 8,
   },
-  input: {
-    width: "100%",
-    marginVertical: 10,
-    alignSelf: "center",
-    borderRadius: 8,
-    backgroundColor: "#f0eeee",
-    fontSize: 16,
-    padding: 10,
-    height: 50,
-  },
+
   buttonContainer: {
     flexDirection: "row",
     width: "100%",
