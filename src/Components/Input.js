@@ -1,16 +1,8 @@
 import React from "react";
 import { StyleSheet, TextInput } from "react-native";
 
-const Input = ({ style, onChangeNum, number }) => {
-  return (
-    <TextInput
-      style={{ ...styles.input, ...style }}
-      placeholder="Select a number"
-      onChangeText={onChangeNum}
-      value={number.toString()}
-      keyboardType="numeric"
-    />
-  );
+const Input = (props) => {
+  return <TextInput {...props} style={{ ...styles.input, ...props.style }} />;
 };
 
 export default Input;

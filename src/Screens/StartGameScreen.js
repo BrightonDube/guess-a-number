@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
+
 import Card from "../Components/Card";
 import Input from "../Components/Input";
 import Colors from "../Constants/Colors";
@@ -7,33 +15,39 @@ import Colors from "../Constants/Colors";
 const StartGameScreen = () => {
   const [number, setNumber] = useState("");
   const handleChange = (num) => {
-    setNumber(num);
+    setNumber(num.replace(/[^0-9]/, ""));
   };
   const handleReset = () => {
     setNumber("");
   };
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>New Game</Text>
-      <Card style={styles.inputContainer}>
-        <Text style={{ fontSize: 36, alignSelf: "center" }}>{number}</Text>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+        <Text style={styles.title}>New Game</Text>
+        <Card style={styles.inputContainer}>
+          <Text style={{ fontSize: 36, alignSelf: "center" }}>{number}</Text>
 
-        <Input
-          style={{ width: "100%" }}
-          number={number}
-          onChangeNum={handleChange}
-        />
+          <Input
+            style={{ width: 140, textAlign: "center" }}
+            placeholder="Select a number"
+            onChangeText={handleChange}
+            value={number.toString()}
+            keyboardType="number-pad"
+            blurOnSubmit
+            maxLength={2}
+          />
 
-        <View style={styles.buttonContainer}>
-          <Pressable onPress={handleReset} style={styles.button}>
-            <Text style={styles.buttonText}>RESET</Text>
-          </Pressable>
-          <Pressable onPress={() => {}} style={styles.button}>
-            <Text style={styles.buttonText}>CONFIRM</Text>
-          </Pressable>
-        </View>
-      </Card>
-    </View>
+          <View style={styles.buttonContainer}>
+            <Pressable onPress={handleReset} style={styles.button}>
+              <Text style={styles.buttonText}>RESET</Text>
+            </Pressable>
+            <Pressable onPress={() => {}} style={styles.button}>
+              <Text style={styles.buttonText}>CONFIRM</Text>
+            </Pressable>
+          </View>
+        </Card>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 const styles = StyleSheet.create({
