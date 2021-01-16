@@ -14,10 +14,24 @@ import Colors from "../Constants/Colors";
 
 const StartGameScreen = () => {
   const [number, setNumber] = useState("");
+  const [confirmed, setConfirmed] = useState(false);
+  const [confirmedNumber, setConfirmedNumber] = useState();
+
   const handleChange = (num) => {
     setNumber(num.replace(/[^0-9]/, ""));
   };
   const handleReset = () => {
+    setNumber("");
+    setConfirmed(false);
+  };
+  const handleConfirm = () => {
+    const enteredNumber = parseInt(number);
+    if (enteredNumber === NaN || enteredNumber <= 0 || enteredNumber > 99) {
+      setConfirmed(false);
+      return;
+    }
+    setConfirmed(true);
+    setConfirmedNumber(enteredNumber);
     setNumber("");
   };
   return (
@@ -41,11 +55,12 @@ const StartGameScreen = () => {
             <Pressable onPress={handleReset} style={styles.button}>
               <Text style={styles.buttonText}>RESET</Text>
             </Pressable>
-            <Pressable onPress={() => {}} style={styles.button}>
+            <Pressable onPress={handleConfirm} style={styles.button}>
               <Text style={styles.buttonText}>CONFIRM</Text>
             </Pressable>
           </View>
         </Card>
+        {confirmed ? <Text>You chose: {confirmedNumber}</Text> : null}
       </View>
     </TouchableWithoutFeedback>
   );
