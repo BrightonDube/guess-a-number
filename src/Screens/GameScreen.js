@@ -32,7 +32,7 @@ const GameScreen = ({ myNum, screen }) => {
     resultHandler();
   };
   return (
-    <View style={styles.container}>
+    <View>
       <Card style={styles.card}>
         <Text style={{ fontSize: 24, alignSelf: "center" }}>
           The computer's guess:{" "}
@@ -55,7 +55,7 @@ const GameScreen = ({ myNum, screen }) => {
         {win ? (
           <View>
             <Text style={{ alignSelf: "center" }}>
-              Game over, computer guessed your number
+              Game over, computer guessed your number {myNum}
             </Text>
             <Pressable style={styles.button} onPress={() => screen(false)}>
               <Text style={styles.buttonText}>Play Again</Text>
@@ -70,11 +70,6 @@ const GameScreen = ({ myNum, screen }) => {
 export default GameScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-    alignItems: "center",
-    flex: 1,
-  },
   card: {
     width: 300,
     maxWidth: "90%",

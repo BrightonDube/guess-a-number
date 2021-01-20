@@ -14,11 +14,18 @@ import Card from "../Components/Card";
 import Input from "../Components/Input";
 import NumberContainer from "../Components/NumberContainer";
 import Colors from "../Constants/Colors";
+import GameScreen from "./GameScreen";
 
-const StartGameScreen = ({ screen }) => {
+const StartGameScreen = () => {
   const [number, setNumber] = useState("");
   const [confirmed, setConfirmed] = useState(false);
   const [confirmedNumber, setConfirmedNumber] = useState();
+  const [switchScreen, setSwitchScreen] = useState(false);
+
+  const screenSwitchHandler = (status) => {
+    setSwitchScreen(status);
+    if (!switchScreen) handleReset();
+  };
 
   const handleChange = (num) => {
     setNumber(num.replace(/[^0-9]/, ""));
@@ -51,47 +58,55 @@ const StartGameScreen = ({ screen }) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <Text style={styles.title}>Fun guessing game</Text>
-        <Card style={styles.inputContainer}>
-          {confirmed ? (
-            <>
-              <Text style={{ fontSize: 32, alignSelf: "center" }}>
-                You selected:
-              </Text>
-              <NumberContainer>{confirmedNumber}</NumberContainer>
-              <Pressable
-                onPress={() => screen(true)}
-                style={{ ...styles.button, ...{ alignSelf: "center" } }}
-              >
-                <Text
-                  style={{ fontSize: 24, alignSelf: "center", color: "white" }}
-                >
-                  START
+        {switchScreen ? (
+          <GameScreen screen={screenSwitchHandler} myNum={confirmedNumber} />
+        ) : (
+          <Card style={styles.inputContainer}>
+            {confirmed ? (
+              <>
+                <Text style={{ fontSize: 32, alignSelf: "center" }}>
+                  You selected:
                 </Text>
+                <NumberContainer>{confirmedNumber}</NumberContainer>
+                <Pressable
+                  onPress={() => screenSwitchHandler(true)}
+                  style={{ ...styles.button, ...{ alignSelf: "center" } }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 24,
+                      alignSelf: "center",
+                      color: "white",
+                    }}
+                  >
+                    START
+                  </Text>
+                </Pressable>
+              </>
+            ) : (
+              <Text style={{ fontSize: 32, alignSelf: "center" }}></Text>
+            )}
+
+            <Input
+              style={{ width: 140, textAlign: "center" }}
+              placeholder="Select a number"
+              onChangeText={handleChange}
+              value={number.toString()}
+              keyboardType="number-pad"
+              blurOnSubmit
+              maxLength={2}
+            />
+
+            <ButtonContainer>
+              <Pressable onPress={handleReset} style={styles.button}>
+                <Text style={styles.buttonText}>RESET</Text>
               </Pressable>
-            </>
-          ) : (
-            <Text style={{ fontSize: 32, alignSelf: "center" }}></Text>
-          )}
-
-          <Input
-            style={{ width: 140, textAlign: "center" }}
-            placeholder="Select a number"
-            onChangeText={handleChange}
-            value={number.toString()}
-            keyboardType="number-pad"
-            blurOnSubmit
-            maxLength={2}
-          />
-
-          <ButtonContainer>
-            <Pressable onPress={handleReset} style={styles.button}>
-              <Text style={styles.buttonText}>RESET</Text>
-            </Pressable>
-            <Pressable onPress={handleConfirm} style={styles.button}>
-              <Text style={styles.buttonText}>CONFIRM</Text>
-            </Pressable>
-          </ButtonContainer>
-        </Card>
+              <Pressable onPress={handleConfirm} style={styles.button}>
+                <Text style={styles.buttonText}>CONFIRM</Text>
+              </Pressable>
+            </ButtonContainer>
+          </Card>
+        )}
       </View>
     </TouchableWithoutFeedback>
   );
