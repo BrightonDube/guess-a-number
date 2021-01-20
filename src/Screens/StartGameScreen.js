@@ -6,11 +6,14 @@ import {
   Pressable,
   Keyboard,
   TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 
 import Card from "../Components/Card";
 import Input from "../Components/Input";
+import NumberContainer from "../Components/NumberContainer";
 import Colors from "../Constants/Colors";
+import GameScreen from "./GameScreen";
 
 const StartGameScreen = () => {
   const [number, setNumber] = useState("");
@@ -26,20 +29,49 @@ const StartGameScreen = () => {
   };
   const handleConfirm = () => {
     const enteredNumber = parseInt(number);
-    if (enteredNumber === NaN || enteredNumber <= 0 || enteredNumber > 99) {
+    if (isNaN(enteredNumber) || enteredNumber <= 0 || enteredNumber > 99) {
       setConfirmed(false);
+      Alert.alert("Invalid Number", "Enter a number between 1-99", [
+        {
+          text: "Okay",
+          onPress: () => {
+            handleReset();
+          },
+          style: "destructive",
+        },
+      ]);
       return;
     }
     setConfirmed(true);
     setConfirmedNumber(enteredNumber);
     setNumber("");
+    Keyboard.dismiss();
   };
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <Text style={styles.title}>New Game</Text>
+        <Text style={styles.title}>Fun guessing game</Text>
         <Card style={styles.inputContainer}>
-          <Text style={{ fontSize: 36, alignSelf: "center" }}>{number}</Text>
+          {confirmed ? (
+            <>
+              <Text style={{ fontSize: 32, alignSelf: "center" }}>
+                You selected:
+              </Text>
+              <NumberContainer>{confirmedNumber}</NumberContainer>
+              <Pressable
+                onPress={() => {}}
+                style={{ ...styles.button, ...{ alignSelf: "center" } }}
+              >
+                <Text
+                  style={{ fontSize: 24, alignSelf: "center", color: "white" }}
+                >
+                  START
+                </Text>
+              </Pressable>
+            </>
+          ) : (
+            <Text style={{ fontSize: 32, alignSelf: "center" }}></Text>
+          )}
 
           <Input
             style={{ width: 140, textAlign: "center" }}
@@ -60,7 +92,7 @@ const StartGameScreen = () => {
             </Pressable>
           </View>
         </Card>
-        {confirmed ? <Text>You chose: {confirmedNumber}</Text> : null}
+        <GameScreen myNum={confirmedNumber} />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -80,6 +112,7 @@ const styles = StyleSheet.create({
     width: 300,
     maxWidth: "90%",
     borderRadius: 8,
+    minHeight: 300,
   },
 
   buttonContainer: {
