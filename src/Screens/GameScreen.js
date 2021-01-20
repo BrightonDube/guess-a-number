@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import NumberContainer from "../Components/NumberContainer";
+import ButtonContainer from "../Components/ButtonContainer";
 import Card from "../Components/Card";
+import Colors from "../Constants/Colors";
 
 const getRandomNumber = (min, max, exclude) => {
   min = Math.ceil(min);
@@ -12,13 +14,13 @@ const getRandomNumber = (min, max, exclude) => {
     return getRandomNumber(min, max, exclude);
   } else return ranNum;
 };
-const GameScreen = ({ myNum }) => {
+const GameScreen = ({ myNum, screen }) => {
   let minimum = 1;
   let maximum = 100;
   const [computerGuess, setComputerGuess] = useState(
     getRandomNumber(minimum, maximum, myNum)
   );
-  const [win, setWin] = useState(false);
+  const [win, setWin] = useState(true);
 
   const resultHandler = () => {
     if (computerGuess === myNum) {
@@ -30,13 +32,38 @@ const GameScreen = ({ myNum }) => {
     resultHandler();
   };
   return (
-    <Card style={styles.container}>
-      <Pressable onPress={() => CompGuessHandler(minimum, maximum, myNum)}>
-        <Text>The computer's guess: </Text>
+    <View style={styles.container}>
+      <Card style={styles.card}>
+        <Text style={{ fontSize: 24, alignSelf: "center" }}>
+          The computer's guess:{" "}
+        </Text>
         <NumberContainer>{computerGuess}</NumberContainer>
-        {win ? <Text>Game over, computer guessed your number</Text> : null}
-      </Pressable>
-    </Card>
+        <ButtonContainer>
+          <Pressable
+            style={styles.button}
+            onPress={() => CompGuessHandler(minimum, maximum, myNum)}
+          >
+            <Text style={styles.buttonText}>Lower</Text>
+          </Pressable>
+          <Pressable
+            style={styles.button}
+            onPress={() => CompGuessHandler(minimum, maximum, myNum)}
+          >
+            <Text style={styles.buttonText}>Higher</Text>
+          </Pressable>
+        </ButtonContainer>
+        {win ? (
+          <View>
+            <Text style={{ alignSelf: "center" }}>
+              Game over, computer guessed your number
+            </Text>
+            <Pressable style={styles.button} onPress={() => screen(false)}>
+              <Text style={styles.buttonText}>Play Again</Text>
+            </Pressable>
+          </View>
+        ) : null}
+      </Card>
+    </View>
   );
 };
 
@@ -44,9 +71,27 @@ export default GameScreen;
 
 const styles = StyleSheet.create({
   container: {
+    padding: 10,
+    alignItems: "center",
+    flex: 1,
+  },
+  card: {
     width: 300,
     maxWidth: "90%",
     borderRadius: 8,
     minHeight: 300,
+  },
+  button: {
+    borderRadius: 8,
+    backgroundColor: Colors.accent,
+    width: 100,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
   },
 });

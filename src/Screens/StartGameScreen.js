@@ -8,14 +8,14 @@ import {
   TouchableWithoutFeedback,
   Alert,
 } from "react-native";
+import ButtonContainer from "../Components/ButtonContainer";
 
 import Card from "../Components/Card";
 import Input from "../Components/Input";
 import NumberContainer from "../Components/NumberContainer";
 import Colors from "../Constants/Colors";
-import GameScreen from "./GameScreen";
 
-const StartGameScreen = () => {
+const StartGameScreen = ({ screen }) => {
   const [number, setNumber] = useState("");
   const [confirmed, setConfirmed] = useState(false);
   const [confirmedNumber, setConfirmedNumber] = useState();
@@ -59,7 +59,7 @@ const StartGameScreen = () => {
               </Text>
               <NumberContainer>{confirmedNumber}</NumberContainer>
               <Pressable
-                onPress={() => {}}
+                onPress={() => screen(true)}
                 style={{ ...styles.button, ...{ alignSelf: "center" } }}
               >
                 <Text
@@ -83,16 +83,15 @@ const StartGameScreen = () => {
             maxLength={2}
           />
 
-          <View style={styles.buttonContainer}>
+          <ButtonContainer>
             <Pressable onPress={handleReset} style={styles.button}>
               <Text style={styles.buttonText}>RESET</Text>
             </Pressable>
             <Pressable onPress={handleConfirm} style={styles.button}>
               <Text style={styles.buttonText}>CONFIRM</Text>
             </Pressable>
-          </View>
+          </ButtonContainer>
         </Card>
-        <GameScreen myNum={confirmedNumber} />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -115,12 +114,6 @@ const styles = StyleSheet.create({
     minHeight: 300,
   },
 
-  buttonContainer: {
-    flexDirection: "row",
-    width: "100%",
-    justifyContent: "space-around",
-    padding: 10,
-  },
   buttonText: {
     color: "white",
     fontSize: 16,
