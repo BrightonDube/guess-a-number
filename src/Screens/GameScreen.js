@@ -70,7 +70,13 @@ const GameScreen = ({ myNum, screen }) => {
           </View>
         ) : (
           <View>
-            <Text style={{ fontSize: 24, alignSelf: "center" }}>
+            <Text
+              style={{
+                fontSize: 24,
+                fontFamily: "OpenSans-Bold",
+                alignSelf: "center",
+              }}
+            >
               The computer's guess:{" "}
             </Text>
             <NumberContainer>{computerGuess}</NumberContainer>
