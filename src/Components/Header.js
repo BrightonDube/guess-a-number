@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   headerTitle: {
-    fontFamily: "Roboto",
+    fontFamily: "open-sans-bold",
     fontSize: 22,
     color: "white",
     top: 20,

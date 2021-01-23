@@ -7,7 +7,7 @@ import AppLoading from "expo-app-loading";
 
 const fetchFonts = () => {
   return Font.loadAsync({
-    "OpenSans-Bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
   });
 };
@@ -15,12 +15,15 @@ const fetchFonts = () => {
 export default function App() {
   const [dataLoaded, setDataLoaded] = useState(false);
   if (!dataLoaded) {
-    <AppLoading
-      startAsync={fetchFonts}
-      onFinish={() => setDataLoaded(true)}
-      onError={(err) => console.log(err)}
-    />;
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setDataLoaded(true)}
+        onError={(err) => console.log(err)}
+      />
+    );
   }
+
   return (
     <View style={styles.screen}>
       <Header title={"Guess a number"} />

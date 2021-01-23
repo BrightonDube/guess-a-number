@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
 import NumberContainer from "../Components/NumberContainer";
 import ButtonContainer from "../Components/ButtonContainer";
 import Card from "../Components/Card";
-import Colors from "../Constants/Colors";
+import Styles from "../Constants/Styles";
 
 const getRandomNumber = (min, max, exclude) => {
   min = Math.ceil(min);
@@ -61,11 +61,11 @@ const GameScreen = ({ myNum, screen }) => {
       <Card style={styles.card}>
         {win ? (
           <View>
-            <Text style={{ alignSelf: "center" }}>
+            <Text style={{ alignSelf: "center", fontFamily: "open-sans" }}>
               Game over, computer guessed your number in {rounds} attempts!
             </Text>
-            <Pressable style={styles.button} onPress={() => screen(false)}>
-              <Text style={styles.buttonText}>Play Again</Text>
+            <Pressable style={Styles.button} onPress={() => screen(false)}>
+              <Text style={Styles.buttonText}>Play Again</Text>
             </Pressable>
           </View>
         ) : (
@@ -73,7 +73,7 @@ const GameScreen = ({ myNum, screen }) => {
             <Text
               style={{
                 fontSize: 24,
-                fontFamily: "OpenSans-Bold",
+                fontFamily: "open-sans-bold",
                 alignSelf: "center",
               }}
             >
@@ -82,16 +82,16 @@ const GameScreen = ({ myNum, screen }) => {
             <NumberContainer>{computerGuess}</NumberContainer>
             <ButtonContainer>
               <Pressable
-                style={styles.button}
+                style={Styles.button}
                 onPress={() => handleNextGuess("lower")}
               >
-                <Text style={styles.buttonText}>Lower</Text>
+                <Text style={Styles.buttonText}>Lower</Text>
               </Pressable>
               <Pressable
-                style={styles.button}
+                style={Styles.button}
                 onPress={() => handleNextGuess("higher")}
               >
-                <Text style={styles.buttonText}>Higher</Text>
+                <Text style={Styles.buttonText}>Higher</Text>
               </Pressable>
             </ButtonContainer>
           </View>
@@ -109,18 +109,5 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
     borderRadius: 8,
     minHeight: 300,
-  },
-  button: {
-    borderRadius: 8,
-    backgroundColor: Colors.accent,
-    width: 100,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
   },
 });
