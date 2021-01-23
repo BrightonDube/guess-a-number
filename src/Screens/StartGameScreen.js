@@ -13,7 +13,7 @@ import ButtonContainer from "../Components/ButtonContainer";
 import Card from "../Components/Card";
 import Input from "../Components/Input";
 import NumberContainer from "../Components/NumberContainer";
-import Colors from "../Constants/Colors";
+import Styles from "../Constants/Styles";
 import GameScreen from "./GameScreen";
 
 const StartGameScreen = () => {
@@ -70,7 +70,7 @@ const StartGameScreen = () => {
                 <NumberContainer>{confirmedNumber}</NumberContainer>
                 <Pressable
                   onPress={() => screenSwitchHandler(true)}
-                  style={{ ...styles.button, ...{ alignSelf: "center" } }}
+                  style={{ ...Styles.button, ...{ alignSelf: "center" } }}
                 >
                   <Text
                     style={{
@@ -98,11 +98,11 @@ const StartGameScreen = () => {
             />
 
             <ButtonContainer>
-              <Pressable onPress={handleReset} style={styles.button}>
-                <Text style={styles.buttonText}>RESET</Text>
+              <Pressable onPress={handleReset} style={Styles.button}>
+                <Text style={Styles.buttonText}>RESET</Text>
               </Pressable>
-              <Pressable onPress={handleConfirm} style={styles.button}>
-                <Text style={styles.buttonText}>CONFIRM</Text>
+              <Pressable onPress={handleConfirm} style={Styles.button}>
+                <Text style={Styles.buttonText}>CONFIRM</Text>
               </Pressable>
             </ButtonContainer>
           </Card>
@@ -127,19 +127,6 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
     borderRadius: 8,
     minHeight: 300,
-  },
-
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-  },
-  button: {
-    borderRadius: 8,
-    backgroundColor: Colors.accent,
-    width: 100,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
 export default StartGameScreen;

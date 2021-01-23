@@ -1,5 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Alert,
+  ImageBackground,
+} from "react-native";
 
 import NumberContainer from "../Components/NumberContainer";
 import ButtonContainer from "../Components/ButtonContainer";
@@ -59,43 +66,52 @@ const GameScreen = ({ myNum, screen }) => {
   return (
     <View>
       <Card style={styles.card}>
-        {win ? (
-          <View>
-            <Text style={{ alignSelf: "center", fontFamily: "open-sans" }}>
-              Game over, computer guessed your number in {rounds} attempts!
-            </Text>
-            <Pressable style={Styles.button} onPress={() => screen(false)}>
-              <Text style={Styles.buttonText}>Play Again</Text>
-            </Pressable>
-          </View>
-        ) : (
-          <View>
-            <Text
+        <ImageBackground
+          source={require("../../assets/success.png")}
+          style={styles.image}
+          resizeMode="cover"
+        >
+          {win ? (
+            <View
               style={{
-                fontSize: 24,
-                fontFamily: "open-sans-bold",
+                width: 250,
+                height: 300,
+                padding: 10,
+                justifyContent: "center",
                 alignSelf: "center",
               }}
             >
-              The computer's guess:{" "}
-            </Text>
-            <NumberContainer>{computerGuess}</NumberContainer>
-            <ButtonContainer>
+              <Text style={styles.centeredText}>
+                Game over, computer guessed your number in {rounds} attempts!
+              </Text>
               <Pressable
-                style={Styles.button}
-                onPress={() => handleNextGuess("lower")}
+                style={{ ...Styles.button, ...{ alignSelf: "center" } }}
+                onPress={() => screen(false)}
               >
-                <Text style={Styles.buttonText}>Lower</Text>
+                <Text style={Styles.buttonText}>Play Again</Text>
               </Pressable>
-              <Pressable
-                style={Styles.button}
-                onPress={() => handleNextGuess("higher")}
-              >
-                <Text style={Styles.buttonText}>Higher</Text>
-              </Pressable>
-            </ButtonContainer>
-          </View>
-        )}
+            </View>
+          ) : (
+            <View>
+              <Text style={styles.centeredText}>The computer's guess: </Text>
+              <NumberContainer>{computerGuess}</NumberContainer>
+              <ButtonContainer>
+                <Pressable
+                  style={Styles.button}
+                  onPress={() => handleNextGuess("lower")}
+                >
+                  <Text style={Styles.buttonText}>Lower</Text>
+                </Pressable>
+                <Pressable
+                  style={Styles.button}
+                  onPress={() => handleNextGuess("higher")}
+                >
+                  <Text style={Styles.buttonText}>Higher</Text>
+                </Pressable>
+              </ButtonContainer>
+            </View>
+          )}
+        </ImageBackground>
       </Card>
     </View>
   );
@@ -109,5 +125,16 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
     borderRadius: 8,
     minHeight: 300,
+    maxHeight: "80%",
+    padding: 0,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+  },
+  centeredText: {
+    fontSize: 24,
+    fontFamily: "open-sans-bold",
+    textAlign: "center",
   },
 });
